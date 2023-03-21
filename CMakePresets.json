@@ -1,0 +1,8 @@
+{
+  "version": 5,
+  "include": [
+    "cmake/default-targets.json"
+  ],
+  "configurePresets": [],
+  "buildPresets": []
+}

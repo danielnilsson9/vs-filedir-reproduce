@@ -1,0 +1,95 @@
+{
+	"version": 5,
+	"configurePresets": [
+		{
+			"name": "linux-base",
+			"description": "Target for Linux.",
+			"hidden": true,
+			"generator": "Ninja",
+			"binaryDir": "${sourceDir}/out/build/${presetName}",
+			"installDir": "${sourceDir}/out/install/${presetName}",
+			"toolchainFile": "${fileDir}/MyToolchain.cmake",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "$env{BUILD_TYPE}"
+			},
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Linux"
+			}
+		},
+		{
+			"name": "windows-base",
+			"description": "Target for Windows.",
+			"hidden": true,
+			"generator": "Ninja",
+			"binaryDir": "${sourceDir}/out/build/${presetName}",
+			"installDir": "${sourceDir}/out/install/${presetName}",
+			"toolchainFile": "${fileDir}/MyToolchain.cmake",
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "cl.exe",
+				"CMAKE_CXX_COMPILER": "cl.exe",
+				"CMAKE_BUILD_TYPE": "$env{BUILD_TYPE}"
+			},
+			"architecture": {
+				"value": "x64",
+				"strategy": "external"
+			},
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Windows"
+			}
+		},
+		{
+			"name": "linux-debug",
+			"description": "Target the Windows Subsystem for Linux (WSL) or a remote Linux system (Debug).",
+			"inherits": "linux-base",
+			"environment": {
+				"BUILD_TYPE": "Debug"
+			}
+		},
+		{
+			"name": "linux-release",
+			"description": "Target the Windows Subsystem for Linux (WSL) or a remote Linux system (Release).",
+			"inherits": "linux-base",
+			"environment": {
+				"BUILD_TYPE": "Release"
+			}
+		},
+		{
+			"name": "windows-debug",
+			"description": "Target Windows (64-bit) with the Visual Studio development environment. (Debug)",
+			"inherits": "windows-base",
+			"environment": {
+				"BUILD_TYPE": "Debug"
+			}
+		},
+		{
+			"name": "windows-release",
+			"description": "Target Windows (64-bit) with the Visual Studio development environment. (RelWithDebInfo)",
+			"inherits": "windows-base",
+			"environment": {
+				"BUILD_TYPE": "Release"
+			}
+		}
+	],
+	"buildPresets": [
+		{
+			"name": "linux-debug",
+			"configurePreset": "linux-debug"
+		},
+		{
+			"name": "linux-release",
+			"configurePreset": "linux-release"
+		},
+		{
+			"name": "windows-debug",
+			"configurePreset": "windows-debug"
+		},
+		{
+			"name": "windows-release",
+			"configurePreset": "windows-release"
+		}
+	]
+}
